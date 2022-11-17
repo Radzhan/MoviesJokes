@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import FilmItem from './components/FilmItem/FilmItem';
+
 
 function App() {
+
+  const [item, setItem] = useState<string[]>([])
+
+  let saveMassage: string;
+  
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (saveMassage !== undefined){
+      setItem(prev => [...prev, saveMassage])
+    }
+  }
+
+  const removeItem = (index: number) => {
+    const copyItem = [...item]
+    copyItem.splice(index, 1)
+    setItem(copyItem)
+  }
+  
+  const createItem = item.map((item, index) => (
+    <FilmItem key={Math.random()} value={item} delete={() => removeItem(index)}></FilmItem>
+  ))
+
+  console.log(item)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <form onSubmit={onSubmit}>
+        <input type="text" onChange={(e) => {
+          saveMassage = e.target.value
+        }} required/>
+        <button type='submit'>Add</button>
+      </form>
+      {createItem}
+    </>
   );
 }
 
