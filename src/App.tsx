@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import FilmItem from './components/FilmItem/FilmItem';
+import FilmItem from './container/components/FilmItem/FilmItem';
+import Jokes from './containerJooks/components/Jokes/Jokes';
+import './App.css'
 
 
 function App() {
@@ -33,13 +35,22 @@ function App() {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <input type="text" onChange={(e) => {
-          saveMassage = e.target.value
-        }} required/>
-        <button type='submit'>Add</button>
-      </form>
-      {createItem}
+      <div className='container'>
+        <div>
+          <form onSubmit={onSubmit}>
+            <input type="text" onChange={(e) => {
+              saveMassage = e.target.value
+            }} required/>
+            <button type='submit'>Add</button>
+          </form>
+          
+          {createItem}
+        </div>
+        
+        <div>
+          <Jokes/>
+        </div>
+      </div>
     </>
   );
 }
