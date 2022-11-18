@@ -15,6 +15,12 @@ function App() {
     }
   }
 
+  const changeValue = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const itemCopy = [...item]
+    itemCopy[index] = e.target.value
+    setItem(itemCopy)
+  }
+
   const removeItem = (index: number) => {
     const copyItem = [...item]
     copyItem.splice(index, 1)
@@ -22,10 +28,8 @@ function App() {
   }
   
   const createItem = item.map((item, index) => (
-    <FilmItem key={Math.random()} value={item} delete={() => removeItem(index)}></FilmItem>
+    <FilmItem key={Math.random()} value={item} delete={() => removeItem(index)} onNameChange={(e: React.ChangeEvent<HTMLInputElement>)  => changeValue(e, index)}></FilmItem>
   ))
-
-  console.log(item)
 
   return (
     <>
